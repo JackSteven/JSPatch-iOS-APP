@@ -1,2 +1,42 @@
 # JSPatch-iOS-APP
-JSPatch 可以让你用 JavaScript 书写原生 iOS APP。只需在项目引入极小的引擎，就可以使用 JavaScript 调用任何 Objective-C 的原生接口，获得脚本语言的优势：动态修复 bug的神器。
+JSPatch 是一个开源项目[Github链接](https://github.com/bang590/JSPatch)，只需要在项目里引入极小的引擎文件，就可以使用 JavaScript 调用任何 Objective-C 的原生接口，替换任意 Objective-C 原生方法。目前主要用于下发 JS 脚本替换原生 Objective-C 代码，实时修复线上 bug。
+
+## BuglyHotfix简介
+BuglyHotfix 基于 JSPatch 封装，完全兼容 JSPatch 编写的脚本文件。本文实例基于集成BuglyHotfix环境进行总结编写实例的。
+
+## SDK集成
+ ● 下载[Bugly iOS](https://bugly.qq.com/docs/release-notes/release-ios-hotfix/) 热更新 SDK
+ ● 添加以下依赖库
+     ●SystemConfiguration.framework
+     ●Security.framework
+     ●JavascriptCore.framework
+     ●libz.tbd
+     ●libc++.tbd
+     
+## SDK初始化
+ ● 在工程的AppDelegate.m文件导入头文件
+     #import <BuglyHotfix/Bugly.h>
+ ● 在工程AppDelegate.m的application:didFinishLaunchingWithOptions:方法中初始化BuglyHotfix，示例代码如下：
+ 
+```objc
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // Override point for customization after application launch.
+    
+    BuglyConfig *config = [[BuglyConfig alloc] init];
+    config.hotfixDebugMode = YES;
+    [Bugly startWithAppId:@"e1d8b8f150"
+#ifdef DEBUG
+        developmentDevice:YES
+#endif
+                   config:config];
+    
+    return YES;
+}
+```
+
+## 发布补丁
+ ● 编写规则参见[JSPatch](https://github.com/bang590/JSPatch)
+ ● 将补丁文件main.js拖拽到工程内；
+ ● 将本地测试通过的main.js文件压缩成zip，点击 Bugly 平台 热更新 功能的发布新补丁 (热更新菜单在应用升级模块下)
+ 
+ 
