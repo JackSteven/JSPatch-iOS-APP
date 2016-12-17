@@ -40,8 +40,8 @@ BuglyHotfix 基于 JSPatch 封装，完全兼容 JSPatch 编写的脚本文件�
 - 将本地测试通过的main.js文件压缩成zip，点击 Bugly 平台 热更新 功能的发布新补丁 (热更新菜单在应用升级模块下)
 - 选择目标版本（即应用版本）及开发设备，其它按默认值进行下发；如[bugly](https://bugly.qq.com/docs/user-guide/instruction-manual-ios-hotfix/?v=20161125161608)
 
- ## 示例
- ```objc
+## 示例
+```objc
  @interface ViewController : UIViewController
 
 - (void)JSPatchWithParam:(NSString *)param;
