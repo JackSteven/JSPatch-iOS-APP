@@ -105,6 +105,8 @@ defineClass("ViewController", {
         },
     })
 ```
+## JSPatchConvertor工具
+用xcode来编辑js非常困难，基本上没有缩进，完全需要手写；经过研究发现使用 Sublime text3 结合 [jsformat 插件](http://bang590.github.io/JSPatchConvertor/)，可以很好的编辑js。
 
 ## 运行效果
 ![alt tag](https://github.com/JackSteven/JSPatch-iOS-APP/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B412%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%883.22.56.png "Simulator png")
