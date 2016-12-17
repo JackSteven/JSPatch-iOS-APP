@@ -38,5 +38,71 @@ BuglyHotfix 基于 JSPatch 封装，完全兼容 JSPatch 编写的脚本文件�
 - 编写规则参见[JSPatch](https://github.com/bang590/JSPatch)
 - 将补丁文件main.js拖拽到工程内；
 - 将本地测试通过的main.js文件压缩成zip，点击 Bugly 平台 热更新 功能的发布新补丁 (热更新菜单在应用升级模块下)
+- 选择目标版本（即应用版本）及开发设备，其它按默认值进行下发；如[bugly](https://bugly.qq.com/docs/user-guide/instruction-manual-ios-hotfix/?v=20161125161608)
+
+ ## 示例
+ ```objc
+ @interface ViewController : UIViewController
+
+- (void)JSPatchWithParam:(NSString *)param;
+
+@end
+```
+ 
+```objc
+@interface ViewController ()
+
+@property(nonatomic, strong) NSString *titleName;
+
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view, typically from a nib.
+    
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)JSPatchWithParam:(NSString *)param
+{
+
+}
+
+@end
+```
+
+```js
+require('ViewController, UIColor')
+
+defineClass("ViewController", ['totalCount'], {
+        viewDidLoad: function() {
+        
+            self.ORIGviewDidLoad();
+            var redColor = UIColor.redColor();
+            self.view().setBackgroundColor(redColor);
+            
+            
+            self.JSPatchWithParam("JSPatch 测试成功");
+            
+        },
+    })
+
+
+defineClass("ViewController", {
+        JSPatchWithParam: function(param) {
+            
+            var alertView = require('UIAlertView').alloc().initWithTitle_message_delegate_cancelButtonTitle_otherButtonTitles("提示",param, self, "确定",  null);
+            alertView.show()
+            
+        },
+    })
+```
  
  
