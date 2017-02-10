@@ -127,5 +127,24 @@ require('NSString');
 var urlString = NSString.stringWithFormat("%@%@", serverUrl, action);
 ```
 
+- 注意一：block 里使用 self 变量。
+在 block 里无法使用 self 变量，需要在进入 block 之前使用临时变量保存它:
+```
+defineClass("TestViewController", {
+  viewDidLoad: function() {
+    var slf = self;
+    Utils.execute_success_failure(userId, block('NSString*', function(name) {
+     
+          slf.doSuccess();
+     
+    }), block('NSError*', function(error) {
+    
+          slf.doFailed();
+          
+    }));
+  }
+});
+```
+
 ## 运行效果
 ![alt tag](https://github.com/JackSteven/JSPatch-iOS-APP/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B412%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%883.22.56.png "Simulator png")
