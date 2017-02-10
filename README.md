@@ -127,7 +127,7 @@ require('NSString');
 var urlString = NSString.stringWithFormat("%@%@", serverUrl, action);
 ```
 
-- 注意一：block 里使用 self 变量。
+- 注意二：block 里使用 self 变量。
 在 block 里无法使用 self 变量，需要在进入 block 之前使用临时变量保存它:
 ```
 defineClass("TestViewController", {
