@@ -110,16 +110,19 @@ defineClass("ViewController", {
 
 - 注意一：自动转化会丢失@字符。
 
-``` Objective-c
+Objective-c
+``` 
 NSString *urlString = [NSString stringWithFormat:@"%@%@", serverUrl, action];
 ```
 
-```JSPatch错误转化
+JSPatch错误转化
+```
 require('NSString');
 var urlString = NSString.stringWithFormat("%@%", serverUrl, action);
 ```
 
-```JSPatch修正
+JSPatch修正
+```
 require('NSString');
 var urlString = NSString.stringWithFormat("%@%@", serverUrl, action);
 ```
