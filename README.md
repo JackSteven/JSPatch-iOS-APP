@@ -129,22 +129,86 @@ var urlString = NSString.stringWithFormat("%@%@", serverUrl, action);
 
 - 注意二：block 里使用 self 变量。
 在 block 里无法使用 self 变量，需要在进入 block 之前使用临时变量保存它:
+
+```
+- (void)viewDidLoad
+{
+    [Utils execute:userId success:^(NSString *name) {
+        
+        // TODO:
+        self.doSomething();
+        
+    } failure:^(NSError *error) {
+        
+        // TODO:
+        self.doSomething();
+        
+    }];
+}
+
+```
+
 ```
 defineClass("TestViewController", {
   viewDidLoad: function() {
-    var slf = self;
-    Utils.execute_success_failure(userId, block('NSString*', function(name) {
-     
-          slf.doSuccess();
-     
-    }), block('NSError*', function(error) {
+  
+    var slf = self; // 这里的self需要保存，才能使用
     
-          slf.doFailed();
+    Utils.execute_success_failure(userId,block('NSString*', function(name) {
+     
+          // TODO:
+          slf.doSomething();
+     
+    }),block('NSError*', function(error) {
+    
+          // TODO:
+          slf.doSomething();
           
     }));
   }
 });
 ```
+
+- 注意三：若要把这个从 OC 传过来的 block 再传回给 OC，同样需要再用 block() 包装，因为 OC 中Block会被转成 JS function。
+
+```
++ (void)execute:(NSString *)userId success:(void (^)(NSString *name))success
+           failure:(void (^)(NSError *error))failure
+{
+    // TODO:
+    
+}
+
+```
+
+
+```
+
+defineClass("TestViewController", {
+            
+ },
+ {
+    Utils: function(userId,succBlock,failBlock) {
+          var slf = self;
+          var succ = block('NSString*', blockDic); // 参数是block时，在js中变成js function,再回调到oc时，需要block括起来
+          var fail = block('NSError*', failBlock);
+          Utils.execute_success_failure(userId, block('NSString *', function(name) {
+     
+               slf.doSuccess(succ);
+     
+          }), block('NSError*', function(error) {
+    
+               slf.doFailed(fail);
+          
+          }));
+});
+
+
+
+
+
+```
+
 
 ## 运行效果
 ![alt tag](https://github.com/JackSteven/JSPatch-iOS-APP/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B412%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%883.22.56.png "Simulator png")
